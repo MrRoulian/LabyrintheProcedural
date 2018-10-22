@@ -23,29 +23,21 @@ public class Perso {
 	}
 
 	public void haut() {
-		/*if (speedY-ACCELERATION >= -MAXSPEED)
-			speedY-=ACCELERATION;*/
 		y-=speedY;
 		updatePositionDiscrete();
 	}
 	
 	public void bas(){
-		/*if (speedY+ACCELERATION <= MAXSPEED)
-			speedY+=ACCELERATION;*/
 		y+=speedY;
 		updatePositionDiscrete();
 	}
 	
 	public void gauche(){
-		/*if (speedX-ACCELERATION >= -MAXSPEED)
-			speedX-=ACCELERATION;*/
 		x-=speedX;
 		updatePositionDiscrete();
 	}
 	
 	public void droite(){
-		/*if (speedX+ACCELERATION <= MAXSPEED)
-			speedX+=ACCELERATION;*/
 		x+=speedX;
 		updatePositionDiscrete();
 	}
@@ -66,7 +58,7 @@ public class Perso {
 	public boolean estDansUnMur(Laby lab){
 		if (lab.getCase(xPatern, yPatern) != null){
 			boolean[] structDuPatern = lab.getCase(xPatern, yPatern).getStructure();
-			//return structDuPatern[calculerNumCaseDansPatern()];			
+			return structDuPatern[Math.abs(calculerNumCaseDansPatern())];
 		}
 		return false;
 	}

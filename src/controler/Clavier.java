@@ -54,16 +54,6 @@ public class Clavier implements KeyListener{
 
 
 		if (zPressed){
-			/*//coin en haut à gauche past mouv
-			i = (int)(lab.getXPerso()-Perso.TAILLEROND/2)/Laby.TAILLECASEPATERN;
-			j = (int)(lab.getYPerso()-Perso.TAILLEROND/2-lab.getSpeedYPerso())/Laby.TAILLECASEPATERN;
-			//coin en haut à droite past mouv
-			k = (int)(lab.getXPerso()+Perso.TAILLEROND/2)/Laby.TAILLECASEPATERN;
-			l = (int)(lab.getYPerso()-Perso.TAILLEROND/2-lab.getSpeedYPerso())/Laby.TAILLECASEPATERN;
-
-			if (!lab.get(i, j) && !lab.getCase(k, l)){
-				lab.hautPerso();
-			}*/
 			lab.hautPerso();
 			if (lab.getPerso().estDansUnMur(lab)){
 				lab.basPerso();
@@ -71,56 +61,26 @@ public class Clavier implements KeyListener{
 
 		}
 		if (sPressed){
-			/*//coin en bas a gauche après mouvement
-			i = (int)(lab.getXPerso()-Perso.TAILLEROND/2)/Laby.TAILLECASEPATERN;
-			j = (int)(lab.getYPerso()+Perso.TAILLEROND/2+lab.getSpeedYPerso())/Laby.TAILLECASEPATERN;
-			//coin en bas a droite après mouvement
-			k = (int)(lab.getXPerso()+Perso.TAILLEROND/2)/Laby.TAILLECASEPATERN;
-			l = (int)(lab.getYPerso()+Perso.TAILLEROND/2+lab.getSpeedYPerso())/Laby.TAILLECASEPATERN;
-
-			if (!lab.getCase(i, j) && !lab.getCase(k, l)){
-				lab.basPerso();
-			}*/
 			lab.basPerso();
 			if (lab.getPerso().estDansUnMur(lab)){
 				lab.hautPerso();
 			}
 		}
 		if (qPressed){
-			/*//coin en haut a gauche après mouvement
-			i = (int)(lab.getXPerso()-Perso.TAILLEROND/2-lab.getSpeedXPerso())/Laby.TAILLECASEPATERN;
-			j = (int)(lab.getYPerso()-Perso.TAILLEROND/2)/Laby.TAILLECASEPATERN;
-			//coin en bas a gauche après mouvement
-			k = (int)(lab.getXPerso()-Perso.TAILLEROND/2-lab.getSpeedXPerso())/Laby.TAILLECASEPATERN;
-			l = (int)(lab.getYPerso()+Perso.TAILLEROND/2)/Laby.TAILLECASEPATERN;
-
-			if (!lab.getCase(i, j) && !lab.getCase(k, l)){
-				lab.gauchePerso();
-			}*/
-
 			lab.gauchePerso();
 			if (lab.getPerso().estDansUnMur(lab)){
 				lab.droitePerso();
 			}
 		}
 		if (dPressed){
-			/*//coin en haut a droite après mouvement
-			i = (int)(lab.getXPerso()+Perso.TAILLEROND/2+lab.getSpeedXPerso())/Laby.TAILLECASEPATERN;
-			j = (int)(lab.getYPerso()-Perso.TAILLEROND/2)/Laby.TAILLECASEPATERN;
-			//coin en bas a droite après mouvement
-			k = (int)(lab.getXPerso()+Perso.TAILLEROND/2+lab.getSpeedXPerso())/Laby.TAILLECASEPATERN;
-			l = (int)(lab.getYPerso()+Perso.TAILLEROND/2)/Laby.TAILLECASEPATERN;
-
-			if (!lab.getCase(i, j) && !lab.getCase(k, l)){
-				lab.droitePerso();
-			}*/
-
 			lab.droitePerso();
 			if (lab.getPerso().estDansUnMur(lab)){
 				lab.gauchePerso();
 			}
-		}		
-		lab.genererAutourPatern(new Point(lab.getXPatern(), lab.getYPatern()));		
+		}
+		lab.setCompteurs(0);
+		if (Laby.RANGEAPPARITION >= 2) lab.genererAutourPatern(new Point(lab.getXPatern(), lab.getYPatern()), true);		
+		else lab.genererAutourPatern(new Point(lab.getXPatern(), lab.getYPatern()), false);
 	}
 
 	@Override

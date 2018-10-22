@@ -59,7 +59,9 @@ public class VueGraphique implements Observer {
         				} else {
         	        		g.setColor(Color.LIGHT_GRAY);
         				}
-    					g.fillRect(i, j, Laby.TAILLEPETITECASE+1, Laby.TAILLEPETITECASE+1);
+    					g.fillRect(	i /*+ (int)lab.getXPerso() - (Laby.TAILLEFENETRE/2 + Laby.TAILLECASEPATERN/2 - Perso.TAILLEROND/2)*/,
+    								j /*+ (int)lab.getYPerso() - (Laby.TAILLEFENETRE/2 + Laby.TAILLECASEPATERN/2 - Perso.TAILLEROND/2)*/,
+    								Laby.TAILLEPETITECASE+1, Laby.TAILLEPETITECASE+1);
         				k++;
         			}
         		}
