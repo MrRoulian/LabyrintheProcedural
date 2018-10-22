@@ -43,7 +43,9 @@ public class Laby extends Observable {
 		notifyObservers();
 	}
 
-	public void genererAutourPatern(int xPat, int yPat) {
+	public void genererAutourPatern(Point p) {
+		int xPat = p.x;
+		int yPat = p.y;
 		if (nbPaternCree < nbCaseADevoiler){
 			Point haut = new Point(xPat,yPat-1);
 			Point bas = new Point(xPat, yPat+1);
@@ -56,11 +58,6 @@ public class Laby extends Observable {
 			Patern aAjouterD = null;
 			Patern aAjouterH = null;
 			Patern aAjouterB = null;
-			if (!lab.containsKey(centre)){
-				aAjouterC = nouveauPatern(centre);
-				if (aAjouterC != null)
-					lab.put(centre, aAjouterC);
-			}
 			if (!lab.containsKey(haut)) {
 				aAjouterH = nouveauPatern(haut);
 				if (aAjouterH != null)
@@ -84,12 +81,17 @@ public class Laby extends Observable {
 				if (aAjouterG != null)
 					lab.put(gauche, aAjouterG);
 			}
-			nbPaternCree++;			
-			
-			/*genererAutourPatern(xPat, yPat-1);
-			genererAutourPatern(xPat, yPat+1);
-			genererAutourPatern(xPat+1, yPat);
-			genererAutourPatern(xPat-1, yPat);*/
+			nbPaternCree++;
+			if (!lab.containsKey(centre)){
+				aAjouterC = nouveauPatern(centre);
+				if (aAjouterC != null)
+					lab.put(centre, aAjouterC);
+			}
+
+			/*genererAutourPatern(haut);
+			genererAutourPatern(bas);
+			genererAutourPatern(gauche);
+			genererAutourPatern(droite);*/
 		} else {
 			nbPaternCree = 0;
 		}
@@ -141,6 +143,7 @@ public class Laby extends Observable {
 		Point pointFutur = null;
 		while (!isOk){
 
+			if (paternExistant.size() == 0) return null;
 			Patern paternALier = paternExistant.get((int)(Math.random()*paternExistant.size()));
 			boolean[] structurePaternALier = paternALier.getStructure();
 			potentielPaternAInserer = getRandomPatern(potentielDejaTeste);
@@ -184,24 +187,16 @@ public class Laby extends Observable {
 				break;
 			}
 			int i =0;
-			int seuil = 10;
+			int seuil = 4;
 			if (isOk){
 				//Pareil pour le patern à lier
 				switch(dessusDessousGaucheDroite(positionPaternACreer, getKey(paternALier))){
 				//créer en bas
 				case 1:				
 					if (structurePaternALier[6] && structurePaternALier[7] && structurePaternALier[8]){
-						aLierDejaTeste.add(paternALier);
-						do {
-							paternALier = paternExistant.get((int)(Math.random()*paternExistant.size()));
-							i++;
-							if (i >= seuil){
-								aLierDejaTeste.clear();
-								i=0;
-							}
-						} while (aLierDejaTeste.contains(paternALier) && aLierDejaTeste.size() != paternExistant.size());
-						//isOk &= (structPaternAInserer[0] && structPaternAInserer[1] && structPaternAInserer[2]);
+						paternExistant.remove(paternALier);
 						isOk = false;
+
 					} else {
 						isOk &= (!structPaternAInserer[0] && !structurePaternALier[6]) || 
 								(!structPaternAInserer[1] && !structurePaternALier[7]) ||
@@ -211,17 +206,8 @@ public class Laby extends Observable {
 					//créer à gauche
 				case 2:
 					if (structurePaternALier[0] && structurePaternALier[3] && structurePaternALier[6]){
-						aLierDejaTeste.add(paternALier);
-						do {
-							paternALier = paternExistant.get((int)(Math.random()*paternExistant.size()));
-							i++;
-							if (i >= seuil){
-								aLierDejaTeste.clear();
-								i=0;
-							}
-						} while (aLierDejaTeste.contains(paternALier) && aLierDejaTeste.size() != paternExistant.size());
-						//isOk &= structPaternAInserer[2] && structPaternAInserer[5] && structPaternAInserer[8];
-						isOk=false;
+						paternExistant.remove(paternALier);
+						isOk = false;
 					} else {
 						isOk &=	(!structPaternAInserer[2] && !structurePaternALier[0]) || 
 								(!structPaternAInserer[5] && !structurePaternALier[3]) ||
@@ -232,17 +218,8 @@ public class Laby extends Observable {
 				case 3:
 
 					if (structurePaternALier[0] && structurePaternALier[1] && structurePaternALier[2]){
-						aLierDejaTeste.add(paternALier);
-						do {
-							paternALier = paternExistant.get((int)(Math.random()*paternExistant.size()));
-							i++;
-							if (i >= seuil){
-								aLierDejaTeste.clear();
-								i=0;
-							}
-						} while (aLierDejaTeste.contains(paternALier) && aLierDejaTeste.size() != paternExistant.size());
-						//isOk &= structPaternAInserer[6] && structPaternAInserer[7] && structPaternAInserer[8];
-						isOk=false;
+						paternExistant.remove(paternALier);
+						isOk = false;
 					} else {
 						isOk &=	(!structPaternAInserer[6] && !structurePaternALier[0]) || 
 								(!structPaternAInserer[7] && !structurePaternALier[1]) ||
@@ -253,17 +230,8 @@ public class Laby extends Observable {
 				case 4:
 
 					if (structurePaternALier[2] && structurePaternALier[5] && structurePaternALier[8]){
-						aLierDejaTeste.add(paternALier);
-						do {
-							paternALier = paternExistant.get((int)(Math.random()*paternExistant.size()));
-							i++;
-							if (i >= seuil){
-								aLierDejaTeste.clear();
-								i=0;
-							}
-						} while (aLierDejaTeste.contains(paternALier) && aLierDejaTeste.size() != paternExistant.size());
-						//isOk &= structPaternAInserer[0] && structPaternAInserer[3] && structPaternAInserer[6];
-						isOk=false;
+						paternExistant.remove(paternALier);
+						isOk = false;
 					} else {
 						isOk &=	(!structPaternAInserer[0] && !structurePaternALier[2]) || 
 								(!structPaternAInserer[3] && !structurePaternALier[5]) ||
@@ -316,7 +284,7 @@ public class Laby extends Observable {
 	public Patern getRandomPatern(ArrayList<Patern> dejaTeste){
 		Patern res = null;
 		do {
-			switch ((int)(Math.random()*15)) {
+			switch ((int)(Math.random()*11+1)) {
 			case 0:	
 				res = new CroixPatern();
 				break;
@@ -358,25 +326,18 @@ public class Laby extends Observable {
 				break;
 			case 13 :
 				res = new DiagoPatern(Rotation.r90);
+				break;
 			case 14 :
-				switch ((int)(Math.random()*2)){
-				case 0:
-					res = new CulDeSacPatern(Rotation.r0);
-					break;
-				case 1:
-					res = new CulDeSacPatern(Rotation.r90);
-					break;
-				}
+				res = new CulDeSacPatern(Rotation.r0);
 				break;
 			case 15:
-				switch ((int)(Math.random()*2)){
-				case 0:
-					res = new CulDeSacPatern(Rotation.r180);
-					break;
-				case 1:
-					res = new CulDeSacPatern(Rotation.r270);
-					break;
-				}
+				res = new CulDeSacPatern(Rotation.r90);
+				break;
+			case 16:
+				res = new CulDeSacPatern(Rotation.r180);
+				break;
+			case 17:
+				res = new CulDeSacPatern(Rotation.r270);
 				break;
 			default:
 				break;

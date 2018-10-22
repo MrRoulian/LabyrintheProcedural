@@ -43,10 +43,6 @@ public class VueGraphique implements Observer {
         
         contentPane.setPreferredSize(new Dimension(Laby.TAILLEFENETRE,Laby.TAILLEFENETRE));
         
-        
-        //addButton.addActionListener(new Clavier(PLUS,m,16));
-
-        //panel.add(numberButtons[0]);
         dessinLaby = new JComponent() {
         	public void paint(Graphics g){
         		int i,j,k;

@@ -1,5 +1,6 @@
 package controler;
 
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -119,7 +120,7 @@ public class Clavier implements KeyListener{
 				lab.gauchePerso();
 			}
 		}		
-		lab.genererAutourPatern(lab.getXPatern(), lab.getYPatern());		
+		lab.genererAutourPatern(new Point(lab.getXPatern(), lab.getYPatern()));		
 	}
 
 	@Override
