@@ -78,9 +78,8 @@ public class Clavier implements KeyListener{
 				lab.gauchePerso();
 			}
 		}
-		lab.setCompteurs(0);
-		if (Laby.RANGEAPPARITION >= 2) lab.genererAutourPatern(new Point(lab.getXPatern(), lab.getYPatern()), true);		
-		else lab.genererAutourPatern(new Point(lab.getXPatern(), lab.getYPatern()), false);
+		
+		lab.genererAutourPatern(new Point(lab.getXPatern(), lab.getYPatern()));
 	}
 
 	@Override

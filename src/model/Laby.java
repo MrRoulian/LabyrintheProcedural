@@ -23,16 +23,18 @@ public class Laby extends Observable {
 	public final static int TAILLEFENETRE = 1000;
 	public final static int TAILLECASEPATERN = TAILLEFENETRE/22;
 	public final static int TAILLEPETITECASE = (int) (TAILLECASEPATERN/Patern.TAILLEPATERN);
-	public static final int RANGEAPPARITION = 3;
+	public static final int RANGEAPPARITION = 10;
 	private int nbCaseADevoiler = RANGEAPPARITION*(RANGEAPPARITION*2+2);
-	private int compteurH = 1,compteurB = 1,compteurG = 1,compteurD = 1 ;
+	private int indice = -1;
 	HashMap<Point,Patern> lab = new HashMap<>();
+	//HashMap<Point,Integer> casesAGenerer = new HashMap<>();
+	ArrayList<Point> casesAGenerer = new ArrayList<Point>();
 	public Perso perso;
 
 	public Laby(){
-		perso = new Perso(TAILLEFENETRE/2 + TAILLECASEPATERN/2 - Perso.TAILLEROND/2, TAILLEFENETRE/2 + TAILLECASEPATERN/2 - Perso.TAILLEROND/2);
+		perso = new Perso(TAILLEFENETRE/2 + TAILLECASEPATERN/2 - Perso.TAILLEROND, TAILLEFENETRE/2 + TAILLECASEPATERN/2 - Perso.TAILLEROND);
 		buildTab();
-
+		System.out.println();
 	}
 
 	public void buildTab(){
@@ -42,73 +44,71 @@ public class Laby extends Observable {
 		notifyObservers();
 	}
 
-	public void genererAutourPatern(Point p, boolean encore) {
+	public void genererAutourPatern(Point p) {
+		if(casesAGenerer.size()+1 == nbCaseADevoiler){
+			indice =0 ;
+			casesAGenerer.clear();
+			return;
+		}
+		
 		int xPat = p.x;
 		int yPat = p.y;
-			Point haut = new Point(xPat,yPat-1);
-			Point bas = new Point(xPat, yPat+1);
-			Point droite = new Point (xPat+1, yPat);
-			Point gauche = new Point (xPat-1, yPat);
-			Point centre = new Point (xPat,yPat);
+		Point haut = new Point(xPat,yPat-1);
+		Point bas = new Point(xPat, yPat+1);
+		Point droite = new Point (xPat+1, yPat);
+		Point gauche = new Point (xPat-1, yPat);
+		Point centre = new Point (xPat,yPat);
 
-			Patern aAjouterC = null;
-			Patern aAjouterG = null;
-			Patern aAjouterD = null;
-			Patern aAjouterH = null;
-			Patern aAjouterB = null;
-			
-			if (!lab.containsKey(haut)) {
-				aAjouterH = nouveauPatern(haut);
-				if (aAjouterH != null)
-					lab.put(haut, aAjouterH);			
-			}
-			if (!lab.containsKey(droite)){
-				aAjouterD = nouveauPatern(droite);
-				if (aAjouterD != null)
-					lab.put(droite, aAjouterD);
-			}
-			if (!lab.containsKey(bas)){
-				aAjouterB = nouveauPatern(bas);
-				if (aAjouterB != null)
-					lab.put(bas, aAjouterB);
-			}
-			if (!lab.containsKey(gauche)){
-				aAjouterG = nouveauPatern(gauche);
-				if (aAjouterG != null)
-					lab.put(gauche, aAjouterG);
-			}
-			if (!lab.containsKey(centre)){
-				aAjouterC = nouveauPatern(centre);
-				if (aAjouterC != null)
-					lab.put(centre, aAjouterC);
-			}
+		//Point persoPoint = new Point(perso.getXPatern(),perso.getYPatern());
 
-		if (encore){
-			compteurH++;
-			if (compteurH < RANGEAPPARITION-1){
-				genererAutourPatern(haut,true);
-			} else {
-				genererAutourPatern(haut,false);
-			}
-			compteurD++;
-			if (compteurD < RANGEAPPARITION-1){
-				genererAutourPatern(droite,true);				
-			} else {
-				genererAutourPatern(droite,false);
-			}
-			compteurB++;
-			if (compteurB < RANGEAPPARITION-1){
-				genererAutourPatern(bas,true);				
-			} else {
-				genererAutourPatern(bas,false);
-			}
-			compteurG++;
-			if (compteurG < RANGEAPPARITION-1){
-				genererAutourPatern(gauche,true);
-			} else {
-				genererAutourPatern(gauche,false);
-			}
+		Patern aAjouterC = null;
+		Patern aAjouterG = null;
+		Patern aAjouterD = null;
+		Patern aAjouterH = null;
+		Patern aAjouterB = null;
+
+
+		if (!casesAGenerer.contains(haut)){
+			casesAGenerer.add(haut);
 		}
+		if (!casesAGenerer.contains(droite)){
+			casesAGenerer.add(droite);
+		}
+		if (!casesAGenerer.contains(bas)){
+			casesAGenerer.add(bas);
+		}
+		if (!casesAGenerer.contains(gauche)){
+			casesAGenerer.add(gauche);
+		}
+
+		if (!lab.containsKey(haut)) {
+			aAjouterH = nouveauPatern(haut);
+			if (aAjouterH != null)
+				lab.put(haut, aAjouterH);			
+		}
+		if (!lab.containsKey(droite)){
+			aAjouterD = nouveauPatern(droite);
+			if (aAjouterD != null)
+				lab.put(droite, aAjouterD);
+		}
+		if (!lab.containsKey(bas)){
+			aAjouterB = nouveauPatern(bas);
+			if (aAjouterB != null)
+				lab.put(bas, aAjouterB);
+		}
+		if (!lab.containsKey(gauche)){
+			aAjouterG = nouveauPatern(gauche);
+			if (aAjouterG != null)
+				lab.put(gauche, aAjouterG);
+		}
+		if (!lab.containsKey(centre)){
+			aAjouterC = nouveauPatern(centre);
+			if (aAjouterC != null)
+				lab.put(centre, aAjouterC);
+		}
+
+		indice++;
+		genererAutourPatern(casesAGenerer.get(indice));
 
 		setChanged();
 		notifyObservers();
@@ -150,6 +150,7 @@ public class Laby extends Observable {
 		}
 
 		boolean isOk = false;
+		boolean isOkPart2 = false;
 		Patern potentielPaternAInserer = null;
 		//Au moins un trou vers un patern existant et au moins un trou vers un patern futur
 		ArrayList<Patern> potentielDejaTeste = new ArrayList<>();
@@ -159,9 +160,15 @@ public class Laby extends Observable {
 
 			if (paternExistant.size() == 0) return null;
 			Patern paternALier = paternExistant.get((int)(Math.random()*paternExistant.size()));
-			boolean[] structurePaternALier = paternALier.getStructure();
+			boolean[] face1PaternALier = paternALier.getFace(1);
+			boolean[] face2PaternALier = paternALier.getFace(2);
+			boolean[] face3PaternALier = paternALier.getFace(3);
+			boolean[] face4PaternALier = paternALier.getFace(4);
 			potentielPaternAInserer = getRandomPatern(potentielDejaTeste);
-			boolean[] structPaternAInserer = potentielPaternAInserer.getStructure();
+			boolean[] face1PaternAInserer = potentielPaternAInserer.getFace(1);
+			boolean[] face2PaternAInserer = potentielPaternAInserer.getFace(2);
+			boolean[] face3PaternAInserer = potentielPaternAInserer.getFace(3);
+			boolean[] face4PaternAInserer = potentielPaternAInserer.getFace(4);
 			if (paternFutur.size() != 0){
 				pointFutur = paternFutur.get((int)(Math.random()*paternFutur.size()));
 			}
@@ -171,37 +178,37 @@ public class Laby extends Observable {
 			switch(dessusDessousGaucheDroite(positionPaternACreer, pointFutur)){
 			case 1:
 				//0,1,2
-				isOk= !structPaternAInserer[0];
-				for (int i= 1 ; i < Patern.TAILLEPATERN-1 ; i++){
-					isOk |= !structPaternAInserer[i];
+				isOk= !face1PaternAInserer[0];
+				for (int i= 1 ; i < face1PaternAInserer.length ; i++){
+					isOk |= !face1PaternAInserer[i];
 				}
 				break;
 			case 2:
 				//2,5,8
-				isOk= !structPaternAInserer[Patern.TAILLEPATERN-1];
-				for (int i = 2*Patern.TAILLEPATERN-1; i < Patern.TAILLEPATERN*Patern.TAILLEPATERN ; i+= Patern.TAILLEPATERN){
-					isOk |= !structPaternAInserer[i];					
+				isOk= !face2PaternAInserer[0];
+				for (int i = 1; i < face2PaternAInserer.length ; i++){
+					isOk |= !face2PaternAInserer[i];					
 				}
 				break;
 			case 3:
 				//6,7,8
-				isOk= !structPaternAInserer[Patern.TAILLEPATERN*Patern.TAILLEPATERN - Patern.TAILLEPATERN];
-				for (int i = Patern.TAILLEPATERN*Patern.TAILLEPATERN - Patern.TAILLEPATERN + 1 ; i < Patern.TAILLEPATERN*Patern.TAILLEPATERN; i++){
-					isOk |= !structPaternAInserer[i];					
+				isOk= !face3PaternAInserer[0];
+				for (int i = 1 ; i < face3PaternAInserer.length; i++){
+					isOk |= !face3PaternAInserer[i];					
 				}
 				break;
 			case 4:
 				//0,3,6
-				isOk= !structPaternAInserer[0];
-				for (int i = Patern.TAILLEPATERN ; i < Patern.TAILLEPATERN*Patern.TAILLEPATERN - Patern.TAILLEPATERN ; i+= Patern.TAILLEPATERN){
-					isOk |= !structPaternAInserer[i];					
+				isOk= !face4PaternAInserer[0];
+				for (int i = 0; i < face4PaternAInserer.length; i++){
+					isOk |= !face4PaternAInserer[i];					
 				}
 				break;
 			default:
 				isOk = true;
 				break;
 			}
-			
+
 			//Lié avec un patern existant
 			if (isOk){
 				//Pareil pour le patern à lier
@@ -209,10 +216,14 @@ public class Laby extends Observable {
 				//créer en bas
 				case 1:
 					//Si celui que j'ai décidé de lié est full mur
-					if (structurePaternALier[6] && structurePaternALier[7] && structurePaternALier[8]){
+					if (Patern.estFullMur(face3PaternALier)){
 						paternExistant.remove(paternALier);
 						isOk = false;
 					} else {
+						for (int i = 0 ; i < Patern.TAILLEPATERN ; i++){
+							isOkPart2 |= !face1PaternAInserer[i] && !face3PaternALier[i];
+						}
+						isOk &= isOkPart2;
 						isOk &= (!structPaternAInserer[0] && !structurePaternALier[6]) || 
 								(!structPaternAInserer[1] && !structurePaternALier[7]) ||
 								(!structPaternAInserer[2] && !structurePaternALier[8]);
@@ -220,10 +231,13 @@ public class Laby extends Observable {
 					break;
 					//créer à gauche
 				case 2:
-					if (structurePaternALier[0] && structurePaternALier[3] && structurePaternALier[6]){
+					if (Patern.estFullMur(face4PaternALier)){
 						paternExistant.remove(paternALier);
 						isOk = false;
 					} else {
+						for (int i = 0 ; i < Patern.TAILLEPATERN ; i++){
+							isOk &= !face2PaternAInserer[i] && !face4PaternALier[i];
+						}
 						isOk &=	(!structPaternAInserer[2] && !structurePaternALier[0]) || 
 								(!structPaternAInserer[5] && !structurePaternALier[3]) ||
 								(!structPaternAInserer[8] && !structurePaternALier[6]);
@@ -232,10 +246,13 @@ public class Laby extends Observable {
 					//créer en haut
 				case 3:
 
-					if (structurePaternALier[0] && structurePaternALier[1] && structurePaternALier[2]){
+					if (Patern.estFullMur(face1PaternALier)){
 						paternExistant.remove(paternALier);
 						isOk = false;
 					} else {
+						for (int i = 0 ; i < Patern.TAILLEPATERN ; i++){
+							isOk &= !face3PaternAInserer[i] && !face1PaternALier[i];
+						}
 						isOk &=	(!structPaternAInserer[6] && !structurePaternALier[0]) || 
 								(!structPaternAInserer[7] && !structurePaternALier[1]) ||
 								(!structPaternAInserer[8] && !structurePaternALier[2]);
@@ -244,10 +261,13 @@ public class Laby extends Observable {
 					//créer à droite
 				case 4:
 
-					if (structurePaternALier[2] && structurePaternALier[5] && structurePaternALier[8]){
+					if (Patern.estFullMur(face2PaternAInserer)){
 						paternExistant.remove(paternALier);
 						isOk = false;
 					} else {
+						for (int i = 0 ; i < Patern.TAILLEPATERN ; i++){
+							isOk &= !face4PaternAInserer[i] && !face2PaternALier[i];
+						}
 						isOk &=	(!structPaternAInserer[0] && !structurePaternALier[2]) || 
 								(!structPaternAInserer[3] && !structurePaternALier[5]) ||
 								(!structPaternAInserer[6] && !structurePaternALier[8]);
@@ -264,7 +284,7 @@ public class Laby extends Observable {
 	}
 
 	//position de p2 par rapport à p1
-	public int dessusDessousGaucheDroite(Point p1, Point p2){
+	private int dessusDessousGaucheDroite(Point p1, Point p2){
 		if (p2 != null){
 			if (p2.y > p1.y ){
 				return 3;
@@ -285,6 +305,11 @@ public class Laby extends Observable {
 		} else {
 			return 0;
 		}
+	}
+
+	public static int calculerNbCaseEcart(Point p1, Point p2){
+		Point p3 = new Point(p2.x-p1.x,p2.y-p1.y);
+		return Math.abs(p3.x)+Math.abs(p3.y);
 	}
 
 	public Point getKey(Patern pat){
@@ -451,14 +476,6 @@ public class Laby extends Observable {
 	public void incrementeSpeedPerso(int i) {
 		perso.setSpeedX(perso.getSpeedX() + i);
 		perso.setSpeedY(perso.getSpeedY() + i);
-
-	}
-
-	public void setCompteurs(int i) {
-		this.compteurH = i;
-		this.compteurB = i;
-		this.compteurG = i;
-		this.compteurD = i;
 	}
 
 }

@@ -58,7 +58,7 @@ public class Perso {
 	public boolean estDansUnMur(Laby lab){
 		if (lab.getCase(xPatern, yPatern) != null){
 			boolean[] structDuPatern = lab.getCase(xPatern, yPatern).getStructure();
-			return structDuPatern[Math.abs(calculerNumCaseDansPatern())];
+			//return structDuPatern[Math.abs(calculerNumCaseDansPatern())];
 		}
 		return false;
 	}

@@ -2,8 +2,7 @@ import model.Laby;
 import view.VueGraphique;
 import view.VueTexte;
 
-public class Main {
-	
+public class Main {	
 
 	public static void main(String[] args) {
 		Laby lab = new Laby();
