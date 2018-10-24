@@ -59,15 +59,15 @@ public class VueGraphique implements Observer {
         				} else {
         	        		g.setColor(Color.LIGHT_GRAY);
         				}
-    					g.fillRect(	i /*+ (int)lab.getXPerso() - (Laby.TAILLEFENETRE/2 + Laby.TAILLECASEPATERN/2 - Perso.TAILLEROND/2)*/,
-    								j /*+ (int)lab.getYPerso() - (Laby.TAILLEFENETRE/2 + Laby.TAILLECASEPATERN/2 - Perso.TAILLEROND/2)*/,
+    					g.fillRect(	i + (((int)lab.getXPerso() - (Laby.TAILLEFENETRE/2 + Laby.TAILLECASEPATERN/2 - Perso.TAILLEROND/2))*-1),
+    								j + (((int)lab.getYPerso() - (Laby.TAILLEFENETRE/2 + Laby.TAILLECASEPATERN/2 - Perso.TAILLEROND/2))*-1),
     								Laby.TAILLEPETITECASE+1, Laby.TAILLEPETITECASE+1);
         				k++;
         			}
         		}
         		//dessin du perso
         		g.setColor(Color.RED);
-                g.fillOval((int)lab.getXPerso(), (int)lab.getYPerso(), Perso.TAILLEROND, Perso.TAILLEROND);
+                g.fillOval(Laby.TAILLEFENETRE/2 + Laby.TAILLECASEPATERN/2 - Perso.TAILLEROND/2, Laby.TAILLEFENETRE/2 + Laby.TAILLECASEPATERN/2 - Perso.TAILLEROND/2, Perso.TAILLEROND, Perso.TAILLEROND);
         	}
 		};
 		

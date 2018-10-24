@@ -49,6 +49,8 @@ public class Perso {
 		yPatern = yCaseDansPatern / Patern.TAILLEPATERN;
 		xCaseDansPatern%=Patern.TAILLEPATERN;
 		yCaseDansPatern%=Patern.TAILLEPATERN;
+		System.out.println(calculerNumCaseDansPatern());
+		System.out.println("\t" + xPatern + " " + yPatern);
 	}
 	
 	public int calculerNumCaseDansPatern(){
@@ -58,7 +60,7 @@ public class Perso {
 	public boolean estDansUnMur(Laby lab){
 		if (lab.getCase(xPatern, yPatern) != null){
 			boolean[] structDuPatern = lab.getCase(xPatern, yPatern).getStructure();
-			//return structDuPatern[Math.abs(calculerNumCaseDansPatern())];
+			return structDuPatern[Math.abs(calculerNumCaseDansPatern())];
 		}
 		return false;
 	}
