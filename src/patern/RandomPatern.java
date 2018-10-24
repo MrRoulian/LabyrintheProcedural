@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class RandomPatern extends Patern {
 
-	public RandomPatern(Rotation rotation) {
+	private RandomPatern(Rotation rotation) {
 		super(rotation);
 		ArrayList<Integer> list = new ArrayList<>();
 		while (list.size() != (Patern.TAILLEPATERN*Patern.TAILLEPATERN)/3){
@@ -16,6 +16,10 @@ public class RandomPatern extends Patern {
 		for (Integer integer : list) {
 			this.structure[integer] = true;
 		}
+	}
+
+	public static Patern getInstance(Rotation r) {
+		return new RandomPatern(r);
 	}
 	
 	

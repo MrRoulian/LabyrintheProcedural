@@ -7,23 +7,24 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Observable;
 
-import patern.CheminPatern;
-import patern.CroixPatern;
-import patern.CulDeSacPatern;
-import patern.DiagoPatern;
-import patern.FullPatern;
 import patern.Patern;
 import patern.RandomPatern;
 import patern.Rotation;
-import patern.TPatern;
-import patern.ViragePatern;
+import taille3.CheminPatern;
+import taille3.CroixPatern;
+import taille3.CulDeSacPatern;
+import taille3.DiagoPatern;
+import taille3.FullPatern;
+import taille3.TPatern;
+import taille3.ViragePatern;
+import taille7.PaternCreux;
 
 public class Laby extends Observable {	
 
 	public final static int TAILLEFENETRE = 1000;
-	public final static int TAILLECASEPATERN = TAILLEFENETRE/22;
+	public final static int TAILLECASEPATERN = TAILLEFENETRE/10;
 	public final static int TAILLEPETITECASE = (int) (TAILLECASEPATERN/Patern.TAILLEPATERN);
-	public static final int RANGEAPPARITION = 10;
+	public static final int RANGEAPPARITION = 3;
 	private int nbCaseADevoiler = RANGEAPPARITION*(RANGEAPPARITION*2+2);
 	private int indice = -1;
 	HashMap<Point,Patern> lab = new HashMap<>();
@@ -38,19 +39,19 @@ public class Laby extends Observable {
 	}
 
 	public void buildTab(){
-		setCase((int)(perso.getX()/TAILLECASEPATERN), (int)(perso.getY()/TAILLECASEPATERN), new CroixPatern());
+		setCase((int)(perso.getX()/TAILLECASEPATERN), (int)(perso.getY()/TAILLECASEPATERN), CroixPatern.getInstance(Rotation.r0));
 
 		setChanged();
 		notifyObservers();
 	}
 
 	public void genererAutourPatern(Point p) {
-		if(casesAGenerer.size()+1 == nbCaseADevoiler){
-			indice =0 ;
+		if(indice >= nbCaseADevoiler){
+			indice = 0 ;
 			casesAGenerer.clear();
 			return;
 		}
-		
+
 		int xPat = p.x;
 		int yPat = p.y;
 		Point haut = new Point(xPat,yPat-1);
@@ -154,7 +155,6 @@ public class Laby extends Observable {
 		Patern potentielPaternAInserer = null;
 		//Au moins un trou vers un patern existant et au moins un trou vers un patern futur
 		ArrayList<Patern> potentielDejaTeste = new ArrayList<>();
-		ArrayList<Patern> aLierDejaTeste = new ArrayList<>();
 		Point pointFutur = null;
 		while (!isOk){
 
@@ -169,6 +169,7 @@ public class Laby extends Observable {
 			boolean[] face2PaternAInserer = potentielPaternAInserer.getFace(2);
 			boolean[] face3PaternAInserer = potentielPaternAInserer.getFace(3);
 			boolean[] face4PaternAInserer = potentielPaternAInserer.getFace(4);
+
 			if (paternFutur.size() != 0){
 				pointFutur = paternFutur.get((int)(Math.random()*paternFutur.size()));
 			}
@@ -220,13 +221,10 @@ public class Laby extends Observable {
 						paternExistant.remove(paternALier);
 						isOk = false;
 					} else {
-						for (int i = 0 ; i < Patern.TAILLEPATERN ; i++){
-							isOkPart2 |= !face1PaternAInserer[i] && !face3PaternALier[i];
+						isOkPart2 = (!face1PaternAInserer[0] && !face3PaternALier[0]);
+						for (int i = 1 ; i < Patern.TAILLEPATERN ; i++){
+							isOkPart2 |= (!face1PaternAInserer[i] && !face3PaternALier[i]);
 						}
-						isOk &= isOkPart2;
-						isOk &= (!structPaternAInserer[0] && !structurePaternALier[6]) || 
-								(!structPaternAInserer[1] && !structurePaternALier[7]) ||
-								(!structPaternAInserer[2] && !structurePaternALier[8]);
 					}
 					break;
 					//créer à gauche
@@ -235,51 +233,45 @@ public class Laby extends Observable {
 						paternExistant.remove(paternALier);
 						isOk = false;
 					} else {
-						for (int i = 0 ; i < Patern.TAILLEPATERN ; i++){
-							isOk &= !face2PaternAInserer[i] && !face4PaternALier[i];
+						isOkPart2 = (!face2PaternAInserer[0] && !face4PaternALier[0]);
+						for (int i = 1 ; i < Patern.TAILLEPATERN ; i++){
+							isOkPart2 |= (!face2PaternAInserer[i] && !face4PaternALier[i]);
 						}
-						isOk &=	(!structPaternAInserer[2] && !structurePaternALier[0]) || 
-								(!structPaternAInserer[5] && !structurePaternALier[3]) ||
-								(!structPaternAInserer[8] && !structurePaternALier[6]);
 					}
 					break;
 					//créer en haut
 				case 3:
-
 					if (Patern.estFullMur(face1PaternALier)){
 						paternExistant.remove(paternALier);
 						isOk = false;
 					} else {
-						for (int i = 0 ; i < Patern.TAILLEPATERN ; i++){
-							isOk &= !face3PaternAInserer[i] && !face1PaternALier[i];
+						isOkPart2 = (!face3PaternAInserer[0] && !face1PaternALier[0]);
+						for (int i = 1 ; i < Patern.TAILLEPATERN ; i++){
+							isOkPart2 |= (!face3PaternAInserer[i] && !face1PaternALier[i]);
 						}
-						isOk &=	(!structPaternAInserer[6] && !structurePaternALier[0]) || 
-								(!structPaternAInserer[7] && !structurePaternALier[1]) ||
-								(!structPaternAInserer[8] && !structurePaternALier[2]);
 					}
 					break;
 					//créer à droite
 				case 4:
-
-					if (Patern.estFullMur(face2PaternAInserer)){
+					if (Patern.estFullMur(face2PaternALier)){
 						paternExistant.remove(paternALier);
 						isOk = false;
 					} else {
-						for (int i = 0 ; i < Patern.TAILLEPATERN ; i++){
-							isOk &= !face4PaternAInserer[i] && !face2PaternALier[i];
+						isOkPart2 = (!face4PaternAInserer[0] && !face2PaternALier[0]);
+						for (int i = 1 ; i < Patern.TAILLEPATERN ; i++){
+							isOkPart2 |= (!face4PaternAInserer[i] && !face2PaternALier[i]);
 						}
-						isOk &=	(!structPaternAInserer[0] && !structurePaternALier[2]) || 
-								(!structPaternAInserer[3] && !structurePaternALier[5]) ||
-								(!structPaternAInserer[6] && !structurePaternALier[8]);
 					}
 					break;
 				}
 
-				if(aLierDejaTeste.size() == paternExistant.size()){
-					return null;
+				if(!isOk){
+					potentielDejaTeste.add(potentielPaternAInserer);
 				}
+
+				isOk &=	isOkPart2;
 			}
-		}		
+		}
 		return potentielPaternAInserer;
 	}
 
@@ -324,65 +316,75 @@ public class Laby extends Observable {
 	public Patern getRandomPatern(ArrayList<Patern> dejaTeste){
 		Patern res = null;
 		do {
-			switch ((int)(Math.random()*11+1)) {
-			case 0:	
-				res = new CroixPatern();
-				break;
-			case 1:
-				res = new ViragePatern(Rotation.r0);
-				break;
-			case 2:
-				res = new ViragePatern(Rotation.r90);
-				break;
+			switch(Patern.TAILLEPATERN) {
 			case 3:
-				res = new ViragePatern(Rotation.r180);
-				break;
-			case 4:
-				res = new ViragePatern(Rotation.r270);
-				break;
-			case 5:
-				res = new CheminPatern(Rotation.r0);
-				break;
-			case 6:
-				res = new CheminPatern(Rotation.r90);
+				switch ((int)(Math.random()*11+1)) {
+				case 0:	
+					res = CroixPatern.getInstance(Rotation.r0);
+					break;
+				case 1:
+					res =  ViragePatern.getInstance(Rotation.r0);
+					break;
+				case 2:
+					res =  ViragePatern.getInstance(Rotation.r90);
+					break;
+				case 3:
+					res =  ViragePatern.getInstance(Rotation.r180);
+					break;
+				case 4:
+					res =  ViragePatern.getInstance(Rotation.r270);
+					break;
+				case 5:
+					res =  CheminPatern.getInstance(Rotation.r0);
+					break;
+				case 6:
+					res =  CheminPatern.getInstance(Rotation.r90);
+					break;
+				case 7:
+					res =  TPatern.getInstance(Rotation.r0);
+					break;
+				case 8:
+					res =  TPatern.getInstance(Rotation.r90);
+					break;
+				case 9:
+					res =  TPatern.getInstance(Rotation.r180);
+					break;
+				case 10:
+					res =  TPatern.getInstance(Rotation.r270);
+					break;
+				case 11:
+					res =  FullPatern.getInstance(Rotation.r0);
+					break;
+				case 12 :
+					res =  DiagoPatern.getInstance(Rotation.r0);
+					break;
+				case 13 :
+					res =  DiagoPatern.getInstance(Rotation.r90);
+					break;
+				case 14 :
+					res =  CulDeSacPatern.getInstance(Rotation.r0);
+					break;
+				case 15:
+					res =  CulDeSacPatern.getInstance(Rotation.r90);
+					break;
+				case 16:
+					res =  CulDeSacPatern.getInstance(Rotation.r180);
+					break;
+				case 17:
+					res =  CulDeSacPatern.getInstance(Rotation.r270);
+					break;
+				default:
+					break;
+				}
 				break;
 			case 7:
-				res = new TPatern(Rotation.r0);
-				break;
-			case 8:
-				res = new TPatern(Rotation.r90);
-				break;
-			case 9:
-				res = new TPatern(Rotation.r180);
-				break;
-			case 10:
-				res = new TPatern(Rotation.r270);
-				break;
-			case 11:
-				res = new FullPatern(Rotation.r0);
-				break;
-			case 12 :
-				res = new DiagoPatern(Rotation.r0);
-				break;
-			case 13 :
-				res = new DiagoPatern(Rotation.r90);
-				break;
-			case 14 :
-				res = new CulDeSacPatern(Rotation.r0);
-				break;
-			case 15:
-				res = new CulDeSacPatern(Rotation.r90);
-				break;
-			case 16:
-				res = new CulDeSacPatern(Rotation.r180);
-				break;
-			case 17:
-				res = new CulDeSacPatern(Rotation.r270);
+				res = PaternCreux.getInstance(Rotation.r0);
 				break;
 			default:
+				res = RandomPatern.getInstance(Rotation.r0);
 				break;
 			}
-			//res = new RandomPatern(Rotation.r0);
+
 		} while (dejaTeste.contains(res));
 		return res;
 	}

@@ -1,14 +1,15 @@
 import java.awt.Point;
 
 import model.Laby;
+import patern.Patern;
 import patern.Rotation;
-import patern.TPatern;
-import patern.ViragePatern;
+import taille3.TPatern;
+import taille3.ViragePatern;
 
 public class Test {
 
 	public static void main(String[] args) {
-		ViragePatern vg = new ViragePatern(Rotation.r180);
+		Patern vg = ViragePatern.getInstance(Rotation.r180);
 		int i =0;
 		for (boolean b : vg.getStructure()) {
 			if (i%3 == 2){

@@ -1,6 +1,11 @@
-package patern;
+package taille3;
+
+import patern.Patern;
+import patern.Rotation;
 
 public class CroixPatern extends Patern{
+	
+	private static CroixPatern instance;
 	
 	/*
 	 * |x   x|
@@ -8,7 +13,7 @@ public class CroixPatern extends Patern{
 	 * |x   x| 
 	 */
 
-	public CroixPatern(){
+	private CroixPatern(){
 		super(Rotation.r0);
 		this.structure[0]=true;
 		this.structure[1]=false;
@@ -20,5 +25,9 @@ public class CroixPatern extends Patern{
 		this.structure[7]=false;
 		this.structure[8]=true;
 		//applyRotation3();
+	}
+	
+	public static Patern getInstance(Rotation r) {
+		return instance ==null?new CroixPatern():instance;
 	}
 }

@@ -97,8 +97,8 @@ public abstract class Patern {
 		}
 		return true;
 	}
-
-
+	
+	//public abstract Patern getInstance(Rotation r);
 
 	@Override
 	public int hashCode() {
