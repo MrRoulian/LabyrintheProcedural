@@ -23,7 +23,7 @@ public class TPatern extends Patern{
 		this.structure[6]=true;
 		this.structure[7]=true;
 		this.structure[8]=true;
-		applyRotation3();
+		applyRotation();
 	}
 	
 	public static Patern getInstance(Rotation r) {

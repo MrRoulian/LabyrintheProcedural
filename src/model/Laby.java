@@ -18,22 +18,27 @@ import taille3.FullPatern;
 import taille3.TPatern;
 import taille3.ViragePatern;
 import taille7.PaternCreux;
+import taille9.EtrangePatern;
+import taille9.EtrangePatern2;
+import taille9.EtrangePatern3;
+import taille9.EtrangePatern4;
 
 public class Laby extends Observable {	
 
-	public final static int TAILLEFENETRE = 1000;
-	public final static int TAILLECASEPATERN = TAILLEFENETRE/10;
-	public final static int TAILLEPETITECASE = (int) (TAILLECASEPATERN/Patern.TAILLEPATERN);
-	public static final int RANGEAPPARITION = 3;
+	public static int LARGEURFENETRE = 1000;
+	public static int HAUTEURFENETRE = 1000;
+	public final static int TAILLEPETITECASE = 35;
+	public final static int TAILLECASEPATERN = TAILLEPETITECASE*Patern.TAILLEPATERN;
+	public static final int RANGEAPPARITION = 20;
 	private int nbCaseADevoiler = RANGEAPPARITION*(RANGEAPPARITION*2+2);
-	private int indice = -1;
+	private int indice= -1;
 	HashMap<Point,Patern> lab = new HashMap<>();
 	//HashMap<Point,Integer> casesAGenerer = new HashMap<>();
 	ArrayList<Point> casesAGenerer = new ArrayList<Point>();
 	public Perso perso;
 
 	public Laby(){
-		perso = new Perso(TAILLEFENETRE/2 + TAILLECASEPATERN/2 - Perso.TAILLEROND, TAILLEFENETRE/2 + TAILLECASEPATERN/2 - Perso.TAILLEROND);
+		perso = new Perso(LARGEURFENETRE/2 - Perso.TAILLEROND, HAUTEURFENETRE/2 - Perso.TAILLEROND);
 		buildTab();
 		System.out.println();
 	}
@@ -47,7 +52,7 @@ public class Laby extends Observable {
 
 	public void genererAutourPatern(Point p) {
 		if(indice >= nbCaseADevoiler){
-			indice = 0 ;
+			indice = -1 ;
 			casesAGenerer.clear();
 			return;
 		}
@@ -107,7 +112,7 @@ public class Laby extends Observable {
 			if (aAjouterC != null)
 				lab.put(centre, aAjouterC);
 		}
-
+		
 		indice++;
 		genererAutourPatern(casesAGenerer.get(indice));
 
@@ -378,7 +383,54 @@ public class Laby extends Observable {
 				}
 				break;
 			case 7:
-				res = PaternCreux.getInstance(Rotation.r0);
+				switch ((int)(Math.random()*1)) {
+				case 0:	
+					res = PaternCreux.getInstance(Rotation.r0);
+					break;
+				}
+				break;
+			case 9:
+				switch((int)(Math.random()*13)){
+				case 0:
+					res =  EtrangePatern.getInstance(Rotation.r0);
+					break;
+				case 1:
+					res =  EtrangePatern.getInstance(Rotation.r90);
+					break;
+				case 2:
+					res =  EtrangePatern.getInstance(Rotation.r180);
+					break;
+				case 3:
+					res =  EtrangePatern.getInstance(Rotation.r270);
+					break;
+				case 4:
+					res =  EtrangePatern2.getInstance(Rotation.r0);
+					break;
+				case 5:
+					res =  EtrangePatern3.getInstance(Rotation.r0);
+					break;
+				case 6:
+					res =  EtrangePatern3.getInstance(Rotation.r90);
+					break;
+				case 7:
+					res =  EtrangePatern3.getInstance(Rotation.r180);
+					break;
+				case 8:
+					res =  EtrangePatern3.getInstance(Rotation.r270);
+					break;
+				case 9:
+					res =  EtrangePatern4.getInstance(Rotation.r0);
+					break;
+				case 10:
+					res =  EtrangePatern4.getInstance(Rotation.r90);
+					break;
+				case 11:
+					res =  EtrangePatern4.getInstance(Rotation.r180);
+					break;
+				case 12:
+					res =  EtrangePatern4.getInstance(Rotation.r270);
+					break;
+				}
 				break;
 			default:
 				res = RandomPatern.getInstance(Rotation.r0);

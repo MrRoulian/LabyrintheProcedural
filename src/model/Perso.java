@@ -47,10 +47,10 @@ public class Perso {
 		yCaseDansPatern = (int) ((y+TAILLEROND/2)/Laby.TAILLEPETITECASE);
 		xPatern = xCaseDansPatern / Patern.TAILLEPATERN;
 		yPatern = yCaseDansPatern / Patern.TAILLEPATERN;
+		xCaseDansPatern = Math.abs(xCaseDansPatern);
+		yCaseDansPatern = Math.abs(yCaseDansPatern);
 		xCaseDansPatern%=Patern.TAILLEPATERN;
 		yCaseDansPatern%=Patern.TAILLEPATERN;
-		System.out.println(calculerNumCaseDansPatern());
-		System.out.println("\t" + xPatern + " " + yPatern);
 	}
 	
 	public int calculerNumCaseDansPatern(){

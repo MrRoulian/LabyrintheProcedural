@@ -3,28 +3,31 @@ package patern;
 import java.util.Arrays;
 
 public abstract class Patern {
-	public static final int TAILLEPATERN = 3;
+	public static final int TAILLEPATERN = 9;
 	protected boolean[] structure = new boolean[TAILLEPATERN*TAILLEPATERN];
 	private Rotation rotation;
 
 	public Patern(Rotation rotation){
 		this.rotation = rotation;
 	}
+	
+	static void rotateCW() {
+	    
+	}
 
-	public void applyRotation3(){
+	public void applyRotation(){
 		boolean[] structApresRotation;
+	    final int M = TAILLEPATERN;
+	    final int N = TAILLEPATERN;
 		while (rotation != Rotation.r0){
+			
 			structApresRotation = new boolean[TAILLEPATERN*TAILLEPATERN];
 
-			structApresRotation[0] = structure[6];
-			structApresRotation[1] = structure[3];
-			structApresRotation[2] = structure[0];
-			structApresRotation[3] = structure[7];
-			structApresRotation[4] = structure[4];
-			structApresRotation[5] = structure[1];
-			structApresRotation[6] = structure[8];
-			structApresRotation[7] = structure[5];
-			structApresRotation[8] = structure[2];
+			for (int r = 0; r < M; r++) {
+		        for (int c = 0; c < N; c++) {
+		        	structApresRotation[c*TAILLEPATERN+M-1-r] = structure[r*TAILLEPATERN+c];
+		        }
+		    }
 
 			structure = structApresRotation;
 
@@ -138,6 +141,23 @@ public abstract class Patern {
 				res+="\n";
 			}
 
+			i++;
+		}		
+		return res;
+	}
+	
+	public String toString(int positionJoueurDansLePartern){
+		String res = "\n";
+		int i =0;
+		for (boolean b : structure) {
+			if (i != positionJoueurDansLePartern){
+				res+=b?"x ":"  ";			
+			} else {
+				res += "O ";
+			}
+			if (i%TAILLEPATERN == TAILLEPATERN-1){
+				res+="\n";
+			}	
 			i++;
 		}		
 		return res;

@@ -11,6 +11,7 @@ import patern.Patern;
 public class VueTexte implements Observer {
 	
     private Laby lab;
+    private int compteur = 0;
 
     public VueTexte(Laby lab) {
         // ...
@@ -18,12 +19,14 @@ public class VueTexte implements Observer {
     }    
 
 	public void afficherTab(){
-		//System.out.println(lab.getHashMap().toString());
+		if (compteur % 10 == 0)
+			System.out.println(lab.getXPatern()+ " " + lab.getYPatern() + "\n" + lab.getCase(lab.getXPatern(), lab.getYPatern()).toString(lab.getPerso().calculerNumCaseDansPatern()));
 	}
 	
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		afficherTab();
+		compteur++;
 	}
 
 }

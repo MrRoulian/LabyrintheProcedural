@@ -80,6 +80,7 @@ public class Clavier implements KeyListener{
 		}
 		
 		lab.genererAutourPatern(new Point(lab.getXPatern(), lab.getYPatern()));
+		
 	}
 
 	@Override

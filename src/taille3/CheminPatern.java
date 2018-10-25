@@ -23,7 +23,7 @@ public class CheminPatern extends Patern {
 		this.structure[6]=true;
 		this.structure[7]=true;
 		this.structure[8]=true;
-		applyRotation3();
+		applyRotation();
 		
 	}
 
