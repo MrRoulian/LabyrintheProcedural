@@ -10,6 +10,7 @@ import java.util.Observable;
 import patern.Patern;
 import patern.RandomPatern;
 import patern.Rotation;
+import patern.StartPatern;
 import taille3.CheminPatern;
 import taille3.CroixPatern;
 import taille3.CulDeSacPatern;
@@ -27,9 +28,9 @@ public class Laby extends Observable {
 
 	public static int LARGEURFENETRE = 1000;
 	public static int HAUTEURFENETRE = 1000;
-	public final static int TAILLEPETITECASE = 35;
+	public final static int TAILLEPETITECASE = 30;
 	public final static int TAILLECASEPATERN = TAILLEPETITECASE*Patern.TAILLEPATERN;
-	public static final int RANGEAPPARITION = 20;
+	public static final int RANGEAPPARITION = Laby.LARGEURFENETRE/Laby.TAILLECASEPATERN;
 	private int nbCaseADevoiler = RANGEAPPARITION*(RANGEAPPARITION*2+2);
 	private int indice= -1;
 	HashMap<Point,Patern> lab = new HashMap<>();
@@ -44,7 +45,7 @@ public class Laby extends Observable {
 	}
 
 	public void buildTab(){
-		setCase((int)(perso.getX()/TAILLECASEPATERN), (int)(perso.getY()/TAILLECASEPATERN), CroixPatern.getInstance(Rotation.r0));
+		setCase((int)(perso.getX()/TAILLECASEPATERN), (int)(perso.getY()/TAILLECASEPATERN), StartPatern.getInstance());
 
 		setChanged();
 		notifyObservers();

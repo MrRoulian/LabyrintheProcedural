@@ -3,7 +3,7 @@ package patern;
 import java.util.Arrays;
 
 public abstract class Patern {
-	public static final int TAILLEPATERN = 9;
+	public static final int TAILLEPATERN = 3;
 	protected boolean[] structure = new boolean[TAILLEPATERN*TAILLEPATERN];
 	private Rotation rotation;
 
