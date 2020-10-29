@@ -42,7 +42,7 @@ public abstract class Patern {
 				rotation = Rotation.r0;
 				break;
 			case r0:
-				System.err.println("Problème avec la rotation");
+				System.err.println("Probleme avec la rotation");
 				break;
 			}
 		}

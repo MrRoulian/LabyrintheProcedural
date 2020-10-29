@@ -13,7 +13,7 @@ public class Perso {
 	private int xCaseDansPatern, yCaseDansPatern;
 	
 	public Perso(double x, double y){
-		//point en haut à gauche
+		//point en haut a gauche
 		this.x=x;
 		this.y=y;
 	}

@@ -216,13 +216,13 @@ public class Laby extends Observable {
 				break;
 			}
 
-			//Lié avec un patern existant
+			//Lie avec un patern existant
 			if (isOk){
-				//Pareil pour le patern à lier
+				//Pareil pour le patern a lier
 				switch(dessusDessousGaucheDroite(positionPaternACreer, getKey(paternALier))){
-				//créer en bas
+				//creer en bas
 				case 1:
-					//Si celui que j'ai décidé de lié est full mur
+					//Si celui que j'ai decide de lie est full mur
 					if (Patern.estFullMur(face3PaternALier)){
 						paternExistant.remove(paternALier);
 						isOk = false;
@@ -233,7 +233,7 @@ public class Laby extends Observable {
 						}
 					}
 					break;
-					//créer à gauche
+					//creer a gauche
 				case 2:
 					if (Patern.estFullMur(face4PaternALier)){
 						paternExistant.remove(paternALier);
@@ -245,7 +245,7 @@ public class Laby extends Observable {
 						}
 					}
 					break;
-					//créer en haut
+					//creer en haut
 				case 3:
 					if (Patern.estFullMur(face1PaternALier)){
 						paternExistant.remove(paternALier);
@@ -257,7 +257,7 @@ public class Laby extends Observable {
 						}
 					}
 					break;
-					//créer à droite
+					//creer a droite
 				case 4:
 					if (Patern.estFullMur(face2PaternALier)){
 						paternExistant.remove(paternALier);
@@ -281,7 +281,7 @@ public class Laby extends Observable {
 		return potentielPaternAInserer;
 	}
 
-	//position de p2 par rapport à p1
+	//position de p2 par rapport a p1
 	private int dessusDessousGaucheDroite(Point p1, Point p2){
 		if (p2 != null){
 			if (p2.y > p1.y ){
@@ -454,7 +454,7 @@ public class Laby extends Observable {
 		if (!lab.containsKey(p))
 			lab.put(p, patern);
 		else
-			System.err.println("On a set une case qui était déjà set");
+			System.err.println("On a set une case qui etait deja set");
 
 		setChanged();
 		notifyObservers();
